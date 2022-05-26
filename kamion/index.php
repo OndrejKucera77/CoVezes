@@ -24,7 +24,7 @@
         }
         #kamion {
             height: 370px;
-            margin-bottom: 45px;
+            margin-bottom: 85px;
             position: relative;
             
             background-image: url("kamion.png");
@@ -88,6 +88,16 @@
         form input[type=text] {
             width: 240px;
         }
+        #popis strong {
+            display: block;
+            margin-bottom: 8px;
+        }
+        #popis b {
+            font-size: 14px;
+        }
+        #popis p {
+            font-size: 13px;
+        }
     </style>
   </head>
   <body>
@@ -117,7 +127,7 @@
                 <input type="submit" value="Přidat">
             </form>
             <?php
-            if (isset($_POST["novynazev"])&&isset($_POST["hodnota"])) {
+            if (isset($_POST["novynazev"])&&!empty($_POST["novynazev"])&&isset($_POST["hodnota"])&&!empty($_POST["hodnota"])) {
                 $nazvy=file_get_contents("pridane_nazvy.json");
                 $json=json_decode($nazvy, true);
                                         
@@ -130,6 +140,20 @@
                 fclose($soubor);                
             }
             ?>
+        </div>
+        <div id="popis">
+            <strong>Z Wikipedie:</strong>
+            <b>Kemlerův kód</b>
+            <p>
+            Kemlerův kód je kód značící nebezpečnost nebezpečné látky pro potřeby přepravy podle dohod ADR a RID. Umisťuje se na výstražnou tabulku o rozměru 300×400 mm na vozidlo přepravující předměty podle těchto dohod. Kemlerův kód slouží pro rychlé zjištění přibližných vlastností (chování) látky a je umístěn v horní polovině tabulky. Dolní polovina tabulky obsahuje podrobnější kód, určující přesně přepravovanou látku.
+            </p>
+            <p>
+            2 – Plynná látka (uvolňování plynů pod tlakem); 3 – Hořlavá kapalina (hořlavost par kapalin a plynů); 4 – Hořlavá pevná látka; 5 – Látka podporující hoření (oxidační účinky); 6 – Jedovatá látka (toxicita); 7 – Radioaktivní látka; 8 – žíravá látka (leptavé účinky); 9 – Samovolná reakce (nebezpečí prudké, bouřlivé reakce); 0 – Bez významu
+            </p>
+            <b>UN kód</b>
+            <p>
+            UN kód je charakteristické čtyřčíslí, přiřazené dnes asi 3000 látkám a jejich směsím, které látku nebo směs jednoznačně identifikuje. Je umístěn v dolní polovině tabulky. Musí být společně s Kemlerovým kódem uveden na každém vozidle používaném při přepravě látek, které spadají do seznamu látek, jejichž přeprava se řídí dle ADR či RID. Látky identifikuje vždy čtyřmístný kód (v případě potřeby se doplňuje kód číslem 0).
+            </p>
         </div>
         <script>
             window.onload = function () {
