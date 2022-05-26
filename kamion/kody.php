@@ -8,7 +8,7 @@ if (isset($_GET["verze"])&&isset($_GET["hodnota"])) {
             echo $kemler_kody[$_GET["hodnota"]];
         }
         else if (strlen($_GET["hodnota"])>1) {
-            echo vygenerujPopis($_GET["hodnota"]);
+            echo vygenerujPopis($_GET["hodnota"]);            
         }
     }
     else {
@@ -17,7 +17,15 @@ if (isset($_GET["verze"])&&isset($_GET["hodnota"])) {
         
         if (isset($un_kody[$_GET["hodnota"]])) {
             echo $un_kody[$_GET["hodnota"]];
-        }               
+        } 
+        else {
+            $un_kody_str=file_get_contents("pridane_nazvy.json");
+            $un_kody=json_decode($un_kody_str, true);
+            
+            if (isset($un_kody[$_GET["hodnota"]])) {
+                echo $un_kody[$_GET["hodnota"]];
+            }
+        }              
     }
 }  
 
