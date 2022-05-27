@@ -80,6 +80,8 @@
             position: absolute;
             top: 142px;
             left: 511px;
+
+            visibility: hidden;
         }
         form div {
             margin-bottom: 10px;
@@ -109,7 +111,7 @@
                     <input type="text" maxlength="4" onKeyUp="vypis(1, this.value)">                    
                 </div>                                                             
                 <div id="un_kod">
-                    <input type="text" maxlength="4" onKeyUp="vypis(2, this.value); zkopiruj(this.value);">
+                    <input type="text" maxlength="4" onKeyUp="vypis(2, this.value)">
                 </div>                                                               
             </div>
             <div id="vypis">
@@ -156,45 +158,32 @@
             </p>
         </div>
         <script>
-            window.onload = function () {
-                document.getElementById("UNform").style.visibility = "hidden";
-            };
-             
             function vypis(verze, hodnota) {
                 if (hodnota=="") {
                     document.getElementById("vystup"+verze).innerHTML = "";
-                    document.getElementById("UNform").style.visibility = "hidden";                
+                    if (verze==2) {
+                        document.getElementById("UNform").style.visibility = "hidden";
+                    }                
                 }
                 else {
                     const xmlhttp = new XMLHttpRequest();
                     xmlhttp.onload = function() {
-                        if (this.responseText == "") {
-                            if (verze==1) {
-                                document.getElementById("vystup1").innerHTML = "";
-                            } 
-                            else {
-                                document.getElementById("vystup2").innerHTML = "";
+                        document.getElementById("vystup"+verze).innerHTML = this.responseText;
+
+                        if (verze==2) {
+                            if (this.responseText == "") {
                                 document.getElementById("UNform").style.visibility = "visible";
                                 document.getElementById("cislo").innerHTML = hodnota;
-                            }
-                        }
-                        else {
-                            if (verze==1) {
-                                document.getElementById("vystup1").innerHTML = this.responseText;
+                                document.getElementById("hidden_input").value = hodnota;
                             }
                             else {
                                 document.getElementById("UNform").style.visibility = "hidden";
-                                document.getElementById("vystup2").innerHTML = this.responseText;
                             }
-                        }                        
+                        }                      
                     }
                     xmlhttp.open("GET", "kody.php?verze="+verze+"&&hodnota="+hodnota);
                     xmlhttp.send();                
                 }                
-            }
-            
-            function zkopiruj(hodnota) {
-                document.getElementById("hidden_input").value = hodnota;
             }
         </script>
     </main>
